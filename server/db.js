@@ -5,9 +5,9 @@ const { Sequelize } = require('sequelize')
 
 //Указываю конфигурацию
 module.exports = new Sequelize(
-   process.env.DB_NAME, //Название порта
+   process.env.DB_NAME, //Название базы данных
    process.env.DB_USER, //Пользователь
-   process.env.DB_PASSWORD, //Пароль
+   process.env.DB_PASSWORD, //Пароль тот что указал при запуске PG ADMIN 4
     {
         dialect: 'postgres',
         host: process.env.DB_HOST,
