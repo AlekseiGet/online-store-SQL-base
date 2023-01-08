@@ -1,21 +1,34 @@
 require('dotenv').config()//для того чтобы сервер мог считывать это файл
 const express = require('express')
 const sequelize = require('./db')
-const PORT = process.env.PORT || 5000  // забираю PORT из переменных окружения
+const fileUpLoad = require('express-fileupload') // установить нужно npm i express-fileupload
 const models = require('./models/models') //подключаю всю базу при запущенном PG Admin4
 const cors = require('cors')// настраиваю cors чтобы отправлять запросы
+const router = require('./routes/index')  //подключил роутер
+const errorHandLer = require('./middleware/ErrorHandlingMiddleware')
+const path = require('path')
 
-
+const PORT = process.env.PORT || 5000  // забираю PORT из переменных окружения
 const app = express()
 
 app.use(cors())
 app.use(express.json()) // чтобы приложение могло парсить json формат
+app.use(express.static(path.resolve(__dirname, "static")))// указать серверу что файлы из папки static раздавать как статику
+app.use(fileUpLoad({})) // передаём пустой объект с опциями
+app.use('/api', router)
 /* 
 //создаю первый get метод а потом удалил
-app.get('/', (red, res) => {
+app.get('/', (req, res) => {
     res.status(200).json({message: 'WORKING !!!'} )//200 значит запрос обработан правильно
 } )
 */
+/*мидлвеар который работает с ошибками ОБЯЗАТЕЛЬНО должен быть в конце
+Этот является замыкающим и поэтому внутри него не вызываем функцию next
+и на нем работа прекращается и вертаем на клиент ответ
+*/
+app.use(errorHandLer)
+
+
 const start = async() => {
     try {
         await sequelize.authenticate()
@@ -28,10 +41,18 @@ const start = async() => {
 
 start()
  
-// остановился 24.54
-/* в терминале sd server -вошел в папку
+// остановился 59.41
+/* в терминале cd server -вошел в папку
                npm run dev - запустил скрипт
     запустил программу pgAdmin 4  пароль "give_me_your_money" 
     в браузере запустил   https://app.diagrams.net/ и открыл файл 123123
-    запустил программу Postman (время 25.15 )      
+    запустил программу Postman (время 25.15 ) 
+    
+    55 минута утановка модулей  для VSC
+    npm i jsonwebtoken  - для генерации токена
+    npm i bcrypt  - для хешиирования паролей и не хранить их в базе данных
+    https://jwt.io/ декодировщик токенов
+    
+    время 1.10 переход к фронту
  */ 
+// нет удаления товара, в controllers дописать функцию
