@@ -5,35 +5,17 @@ import Auth from './pages/Auth'
 import Basket from "./pages/Basket"
 import DevicePage from "./pages/DevicePage"
 
+
 //Только для авторизованых пользователей
 export const authRoutes = [
-    {
-        path: ADMIN_ROUTE , // путь
-        Component: Admin
-    }, 
-    {
-        path: BASKET_ROUTE, // путь
-        Component: Basket
-    }
+    {path: ADMIN_ROUTE , Component: Admin }, 
+    {path: BASKET_ROUTE, Component: Basket}
 ]
 
 //Для всех пользователей
 export const publicRoutes = [
-    {
-        path: SHOP_ROUTE, // путь
-        Component: Shop
-    },
-    {
-        path: LOGIN_ROUTE, // путь
-        Component: Auth
-    },
-    {
-        path: REGISTRATION_ROUTE, // путь
-        Component: Auth
-    },
-    {
-        path: DEVICE_ROUTE + '/:id' , // путь
-        Component: DevicePage
-    }
-
-]
+    {path: SHOP_ROUTE, Component: Shop},
+    {path: LOGIN_ROUTE, Component: Auth },
+    {path: REGISTRATION_ROUTE, Component: Auth},
+    {path: DEVICE_ROUTE + '/:id' ,  Component: DevicePage }
+  ]
