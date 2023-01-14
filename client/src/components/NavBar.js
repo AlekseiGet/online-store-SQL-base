@@ -3,14 +3,16 @@ import { Context } from '../index';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink } from 'react-router-dom';
-import { SHOP_ROUTE } from '../utils/consts';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from '../utils/consts';
 import Button from 'react-bootstrap/esm/Button';
 import { observer } from 'mobx-react-lite';
 
 
+
 const NavBar =  observer(() => {
     const {user} = useContext(Context)
+    const history = useNavigate()
     //  https://react-bootstrap.github.io/components/navbar/ Скопировал и сюда вставил, вот и весь НафБар (время 1.25)
     
     return (
@@ -19,8 +21,8 @@ const NavBar =  observer(() => {
           <NavLink style={{ color: 'red' }} to={SHOP_ROUTE } >Купи девайс</NavLink>
             {user.isAuth ?
                     <Nav className="ml-auto" >
-                        <Button variant={'outline-light'} className="me-2">Админ Панель</Button>
-                        <Button variant={'outline-light'} >Войти</Button>
+                        <Button variant={'outline-light'} onClick={() => history(ADMIN_ROUTE)} className="me-2">Админ Панель</Button>
+                        <Button variant={'outline-light'} onClick={() => history(LOGIN_ROUTE)} >Выйти</Button>
                     </Nav>
                         : 
                     <Nav className="ml-auto" >

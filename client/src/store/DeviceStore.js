@@ -12,11 +12,15 @@ export default class DeviceStore {
             { id: 2, name: 'Apple' }
         ]
         this._devices = [
-            { id: 1, name: '12pro', price: 10000, rating: 0, img: {imagen } },
-            { id: 2, name: '12pro', price: 10000, rating: 0, img: imagen },
-            { id: 3, name: '12pro', price: 10000, rating: 0, img: imagen },
-            { id: 4, name: '12pro', price: 10000, rating: 0, img: imagen }
+            { id: 1, name: '12pro', price: 10000, rating: 1, img: imagen  },
+            { id: 2, name: '12pro', price: 10000, rating: 2, img: imagen },
+            { id: 3, name: '12pro', price: 10000, rating: 3, img: imagen },
+            { id: 4, name: '12pro', price: 10000, rating: 4, img: imagen },
+            
         ]
+        this._selectedType ={}//для кликабельности
+        this._selectedBrand = {}//для кликабельности
+
         makeAutoObservable(this)//mobx будет следить за изменениями компонента и при изменении компоненты будут перерендиваться ,будет показывать авторизован пользователь или нет
     }
     setIsTypes(types) { 
@@ -28,6 +32,12 @@ export default class DeviceStore {
     setDevice(devices) {
         this._devices = devices
     }
+    setSelectedType(type) {
+       this._selectedType = type
+    }
+    setSelectedBrand(brand) {
+        this._selectedBrand = brand
+    }
   
     get types() {
         return this._types
@@ -37,6 +47,12 @@ export default class DeviceStore {
     }
     get devices() {
         return this._devices
+    }
+    get selectedType() {
+        return this._selectedType
+    }
+    get selectedBrand() {
+        return this._selectedBrand
     }
 }
 
