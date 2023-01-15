@@ -1,14 +1,39 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/esm/Form';
 import Card from 'react-bootstrap/esm/Card';
 import Button from 'react-bootstrap/esm/Button';
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
-import { Link, useLocation } from 'react-router-dom';
+import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../utils/consts';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { login, registration } from '../http/userApi';
+import { observer } from 'mobx-react-lite';
+import { Context } from '..';
 
-const Auth = () => {
+const Auth = observer(() => {
+    const {user} = useContext(Context)
     const location = useLocation()
+    const history = useNavigate()
     const isLogin = location.pathname === LOGIN_ROUTE
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    //функция под регистрацию и под регистрацию
+    const click = async () => {
+        try {
+            let data;
+             if (isLogin) {
+                 data = await login(email, password)  
+             }else {
+                 data = await registration(email, password)
+             }
+                 user.setUser(data)//сохратяю данные о пользователе data или user?
+                 user.setIsAuth(true)
+                 history(SHOP_ROUTE)
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+        
+    }
 
     return (
         <Container
@@ -20,10 +45,15 @@ const Auth = () => {
                     <Form.Control
                     className='mt-3'
                     placeholder='введите ваш адресс...'
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                     />
                     <Form.Control
                         className='mt-3'
                         placeholder='введите ваш пароль...'
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        type='password'
                     />
                     <Form className='d-flex justify-content-between mt-3 pl-3 pr3' >
                         {isLogin ?
@@ -36,8 +66,8 @@ const Auth = () => {
                             </div>
                         }
                        
-                        <Button  variant={"outline-success"} >
-                            {isLogin ? "Войти" : "Регистрация"}
+                        <Button  variant={"outline-success"} onClick={click}>
+                             {isLogin ? "Войти" : "Регистрация"}
                         </Button>
                     </Form>
                     
@@ -45,7 +75,7 @@ const Auth = () => {
             </Card>
         </Container>
     );
-};
+});
 
 export default Auth;
 
