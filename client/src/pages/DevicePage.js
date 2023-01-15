@@ -12,7 +12,7 @@ import Button from 'react-bootstrap/esm/Button';
 const DevicePage = () => {
     const device = { id: 1, name: '12pro', price: 10000, rating: 1, img: imagen }
     const descreption = [
-        {id: 1, title:'оперативная память', description:'5 гб'},
+        { id: 1, title:'оперативная память', description:'5 гб'},
         { id: 2, title: 'Камера', description: '12 мП' },
         { id: 3, title: 'Процессор', description: 'пернтиум 3' },
         { id: 4, title: 'Количество ядер', description: '2' },

@@ -7,10 +7,10 @@ import {SHOP_ROUTE } from "../utils/consts"
 const AppRouter = () => {
    const {user} = useContext(Context)
  //  console.log(user); - получил доступ к глобальному хранилищу
-
+  
     return (
        <Routes>
-          {user.isAuth && authRoutes.map(({path, Component }) => //проверяю если авторизован == true
+          {user.isAuth || authRoutes.map(({path, Component }) => //проверяю если авторизован == true я изменил && на ||
              <Route key={path} path={path} element={<Component/> } exact />
           )}
             {publicRoutes.map(({ path, Component }) => //всегда доступен
