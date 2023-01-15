@@ -3,21 +3,9 @@ import  imagen  from "../image/12337140_2.jpg";
 
 export default class DeviceStore {
     constructor() {//он будет вызываться при создании объекта данного класса
-        this._types =[
-            {id: 1, name: 'холодильники'},
-            {id: 2, name: 'Смартфоны'}
-        ]
-        this._brands = [
-            { id: 1, name: 'Samsung' },
-            { id: 2, name: 'Apple' }
-        ]
-        this._devices = [
-            { id: 1, name: '12pro', price: 10000, rating: 1, img: imagen  },
-            { id: 2, name: '12pro', price: 10000, rating: 2, img: imagen },
-            { id: 3, name: '12pro', price: 10000, rating: 3, img: imagen },
-            { id: 4, name: '12pro', price: 10000, rating: 4, img: imagen },
-            
-        ]
+        this._types =[]
+        this._brands = []
+        this._devices = []
         this._selectedType ={}//для кликабельности
         this._selectedBrand = {}//для кликабельности
 
