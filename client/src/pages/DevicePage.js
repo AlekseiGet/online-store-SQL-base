@@ -1,29 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Image from 'react-bootstrap/esm/Image';
 import Row from 'react-bootstrap/esm/Row';
 import BigStar from "../assets/VeryBigStar.png"
 import Card from 'react-bootstrap/esm/Card';
-
 import imagen from "../image/12337140_2.jpg";
 import Button from 'react-bootstrap/esm/Button';
+import { useParams } from 'react-router-dom';
+import { fetchOneDevice } from '../http/deviceApi';
 
 const DevicePage = () => {
-    const device = { id: 1, name: '12pro', price: 10000, rating: 1, img: imagen }
-    const descreption = [
-        { id: 1, title:'оперативная память', description:'5 гб'},
-        { id: 2, title: 'Камера', description: '12 мП' },
-        { id: 3, title: 'Процессор', description: 'пернтиум 3' },
-        { id: 4, title: 'Количество ядер', description: '2' },
-        { id: 5, title: 'Аккамулятор', description: '4000' },
-    ]
+    
+      const [device, setDevice] =useState({info: []})
+      const {id} = useParams()//параметры строки запроса
+      useEffect(() => {
+        fetchOneDevice(id).then(data => setDevice(data))
+      },[] )
 
     return (
         <Container className='mt-3' >
             <Row>
                <Col nd={4}>
-                   <Image width={300} height={300} src={imagen} />
+                    <Image width={300} height={300} src={process.env.REACT_APP_API_URL + device.img} />
                </Col> 
                <Col nd={4}>
                    <Row className='d-flex flex-column align-items-center ' >
@@ -46,7 +45,7 @@ const DevicePage = () => {
             </Row>
             <Row className='d-flex flex-column m-3'>
                 <h2>Характеристики</h2>
-                {descreption.map((info, index) =>
+                {device.info.map((info, index) =>
                     <Row key={info.id} style={{ background: index % 2 === 0 ? 'lightgray' : 'transparent', padding: 10 }}> {//каждая вторая строка серая
                     }
                         {info.title}: {info.description}
