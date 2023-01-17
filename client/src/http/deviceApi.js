@@ -20,8 +20,10 @@ export const createBrand = async (brand) => {
 }
 
 //получение  $host
-export const fetchBrand = async () => {
-    const { data } = await $host.get('api/brand')
+export const fetchBrand = async (typeId, brandId, page, limit = 5) => {//передал сюда typeId, brandId, page, limit по умолчанию равен 5
+    const { data } = await $host.get('api/brand', {params: {//в опциях можно эти параметры указать удобным для меня видом
+        typeId, brandId, page, limit //они автоматически подставятся в строку запроса если переменная не пустая
+    }} )
     return data
 }
 

@@ -24,9 +24,11 @@ const CreateDevice = observer(({ show, onHide }) => {
      const addInfo = ()=> {
         setInfo([...info,{title: '', description: '', number: Date.now()}])
      }
+     
      const removeInfo = (number) => {
          setInfo(info.filter(i => i.number !== number))
      }
+
      /**
       * функция добавления инфо
       * пробегаю по массиву
@@ -35,22 +37,28 @@ const CreateDevice = observer(({ show, onHide }) => {
       * - тоесть если ключь был title то заменяю на новое значение
       *  В Ином случае : i - возвращаю объект не изменённым
       */
+
      const changeInfo = (key, value, number) => {
           setInfo(info.map(i => i.number === number ?  {...i, [key]: value} : i))
      }
 
-
-
-
-     const selectFile = e => {
-         setFile(e.target.files[0])
-      //будет вызываться когда выбрал файл на компе console.log(e.target.files);
+     const selectFile = e => { //будет вызываться когда выбрал файл на компе console.log(e.target.files);
+         setFile(e.target.files[0])   
      }
-
 
      //функция которая отправляет запрос на сервер и добавляет новое устройство
      const addDevice = ()=> { 
-        createDevice()//В ней отправляем запрос на сервер
+        const formData = new FormData()//создал объект форм дата
+        // c помшщью функции append по ключу  , 
+        formData.append('name', name)  //первым параметром передаю ключь
+        formData.append('price', `${price} `)//а вторым параметром значение (должно быть строковым)
+        formData.append('img', file)//как img передаю файл
+         formData.append('brandId', device.selectedBrand.id)//забираю только id а не целиком объект
+         formData.append('typeId', device.selectedType.id)
+         //массив нельзя передать .. либо строка либо блопп 
+         formData.append('info', JSON.stringify(info))// массив перегоняю в строку, а на сервере будет парсипься обратно в массив
+
+        createDevice(formData).then(data => onHide() )//В ней отправляем запрос на сервер
      }
            
     return (

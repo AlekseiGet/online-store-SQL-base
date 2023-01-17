@@ -8,6 +8,7 @@ import TypeBar from '../components/TypeBar';
 import { observer } from 'mobx-react-lite';
 import { Context } from '..';
 import { fetchTypes, fetchBrand, fetchDevice } from '../http/deviceApi';
+import Pages from '../components/Pages';
 
 const Shop = observer(() => {
     const {device} = useContext(Context)
@@ -15,7 +16,10 @@ const Shop = observer(() => {
     useEffect(()=> {
         fetchTypes().then(data => device.setIsTypes(data))
         fetchBrand().then(data => device.setBrand(data))
-        fetchDevice().then(data => device.setDevice(data.rows))
+        fetchDevice().then(data => {
+             device.setDevice(data.rows)
+             device.setTotalCount(data.count)//узнать сколько товара получили после запроса
+            })
     }, [])
 
     return (
@@ -27,6 +31,7 @@ const Shop = observer(() => {
                 <Col md={9}>
                      <BrandVBar/>
                      <DeviceList/>
+                     <Pages/>
                 </Col>
            
             </Row>

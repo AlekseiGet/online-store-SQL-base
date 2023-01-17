@@ -8,6 +8,9 @@ export default class DeviceStore {
         this._devices = []
         this._selectedType ={}//для кликабельности
         this._selectedBrand = {}//для кликабельности
+        this._page = 1 // отвечает за текущую страницу
+        this._totalCount = 0  // за общее количество товара доступного по запросу
+        this._limit = 3 // колличество товара на одной станице
 
         makeAutoObservable(this)//mobx будет следить за изменениями компонента и при изменении компоненты будут перерендиваться ,будет показывать авторизован пользователь или нет
     }
@@ -26,6 +29,17 @@ export default class DeviceStore {
     setSelectedBrand(brand) {
         this._selectedBrand = brand
     }
+    setPage(page) {
+        this._page = page
+    }
+    setTotalCount(count) {
+        this._totalCount = count
+    }
+    setLimit(limit) {
+        this._limit = limit
+    }
+
+
   
     get types() {
         return this._types
@@ -41,6 +55,15 @@ export default class DeviceStore {
     }
     get selectedBrand() {
         return this._selectedBrand
+    }
+    get totalCount() {
+        return this._totalCount
+    }
+    get page() {
+        return this._page
+    }
+    get limit() {
+        return this._limit
     }
 }
 
