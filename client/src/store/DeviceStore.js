@@ -24,9 +24,11 @@ export default class DeviceStore {
         this._devices = devices
     }
     setSelectedType(type) {
+        this.setPage(1) //чтобы при перезагрузке страницы при выборе начиналось с 1 страницы
        this._selectedType = type
     }
     setSelectedBrand(brand) {
+        this.setPage(1) //чтобы при перезагрузке страницы при выборе начиналось с 1 страницы
         this._selectedBrand = brand
     }
     setPage(page) {

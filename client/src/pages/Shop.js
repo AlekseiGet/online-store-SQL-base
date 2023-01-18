@@ -16,11 +16,18 @@ const Shop = observer(() => {
     useEffect(()=> {
         fetchTypes().then(data => device.setIsTypes(data))
         fetchBrand().then(data => device.setBrand(data))
-        fetchDevice().then(data => {
+        fetchDevice(null,  null, 1, 2).then(data => {   //typeId, brandId, текущая страница, ограниченое по количеству  ЗДЕСЬ
              device.setDevice(data.rows)
              device.setTotalCount(data.count)//узнать сколько товара получили после запроса
             })
     }, [])
+
+    useEffect(()=>{
+        fetchDevice(device.selectedType.id, device.selectedBrand.id, device.page, 2).then(data => {   //выбраный тип из DeviceStore, выбраный бренд, текущая страница полученая из STORE, limit
+            device.setDevice(data.rows)
+            device.setTotalCount(data.count)//узнать сколько товара получили после запроса
+        })
+    }, [device.page, device.selectedType, device.selectedBrand])//будет вызываться каждый раз когда изменим страницу, бренд , тип
 
     return (
         <Container>
