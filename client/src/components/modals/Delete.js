@@ -4,11 +4,13 @@ import Modal from 'react-bootstrap/esm/Modal';
 import Form from 'react-bootstrap/esm/Form';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 import { Context } from '../../';
-import { fetchTypes, fetchBrand, fetchDevice, createDevice } from '../../http/deviceApi';
+import { fetchTypes, fetchBrand, fetchDevice, deleteType } from '../../http/deviceApi';
 import { observer } from 'mobx-react-lite';
 
 const Delete = observer(({ show, onHide }) => {
     const { device } = useContext(Context)
+
+    const [value, setValue] = useState('')  
 
     useEffect(() => {
         fetchDevice(device.selectedType.id, device.selectedBrand.id, device.page, 2).then(data => {   //выбраный тип из DeviceStore, выбраный бренд, текущая страница полученая из STORE, limit
@@ -30,7 +32,15 @@ const Delete = observer(({ show, onHide }) => {
       }
 
     const deletType = () => {
-        alert(`удалить "${device.selectedType.name }" ?`)
+        if (device.selectedType.name) {
+            alert(`удалить "${device.selectedType.name }" ?`)
+            deleteType({ id: device.selectedType.id })
+        } else {
+            alert('Не выбрал - нечего удалять')
+        }
+        
+        onHide()
+        
     }
 
     const deletBrand = () => {
@@ -52,7 +62,7 @@ const Delete = observer(({ show, onHide }) => {
             <Modal.Body>
                 <Form>
                     <Dropdown className='mt-2 mb-2'>
-                        <Dropdown.Toggle >{device.selectedType.name || 'Выберите тип'} </Dropdown.Toggle>
+                        <Dropdown.Toggle  >{device.selectedType.name || 'Выберите тип'} </Dropdown.Toggle>
                         <Dropdown.Menu>
                             {device.types.map(type =>
                                 <Dropdown.Item onClick={() => device.setSelectedType(type)} key={type.id}>{type.name}</Dropdown.Item>

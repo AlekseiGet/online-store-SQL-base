@@ -6,33 +6,32 @@ export const createType = async (type) => {
     return data
 }
 
-//получение  $host
-export const fetchTypes = async () => {
-    const { data } = await $host.get('api/type')
+export const deleteType = async (type) => {
+    console.log(type);
+    const { data } = await $authHost.delete('api/type', type)    
     return data
 }
 
-
-//запрос  $authHost
 export const createBrand = async (brand) => {
     const { data } = await $authHost.post('api/brand', brand)
     return data
 }
 
-//получение  $host
-export const fetchBrand = async () => {
-    const { data } = await $host.get('api/brand' )
-    return data
-}
-
-
-//запрос  $authHost
 export const createDevice = async (device) => {
     const { data } = await $authHost.post('api/device', device)
     return data
 }
 
-//получение  $host
+export const fetchTypes = async () => {
+    const { data } = await $host.get('api/type')
+    return data
+}
+
+export const fetchBrand = async () => {
+    const { data } = await $host.get('api/brand' )
+    return data
+}
+
 export const fetchDevice = async (typeId, brandId, page, limit = 5) => {//передал сюда typeId, brandId, page, limit по умолчанию равен 5
     const { data } = await $host.get('api/device', {
         params: {//в опциях можно эти параметры указать удобным для меня видом
