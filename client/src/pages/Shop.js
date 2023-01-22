@@ -14,9 +14,9 @@ const Shop = observer(() => {
     const {device} = useContext(Context)
   
     useEffect(()=> {
-        fetchTypes().then(data => device.setIsTypes(data))
+        fetchTypes().then(data => device.setTypes(data))
         fetchBrand().then(data => device.setBrand(data))
-        fetchDevice(null,  null, 1, 2).then(data => {   //typeId, brandId, текущая страница, ограниченое по количеству  ЗДЕСЬ
+        fetchDevice(null,  null, 1, 12).then(data => {   //typeId, brandId, текущая страница, ограниченое по количеству  ЗДЕСЬ
              device.setDevice(data.rows)
              device.setTotalCount(data.count)//узнать сколько товара получили после запроса
             })

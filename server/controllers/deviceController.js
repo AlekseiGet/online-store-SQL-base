@@ -55,7 +55,7 @@ class DviceController {
             devices = await Device.findAndCountAll({ where: { typeId}, limit, offset })
         }
         if (brandId && typeId) {
-            devices = await Device.findAndCountAll({ where: { brandId, typeId }, limit, offset })
+            devices = await Device.findAndCountAll({ where: {typeId ,  brandId}, limit, offset })
         }
         return res.json(devices)
     }
@@ -72,14 +72,13 @@ class DviceController {
     }
     //функция удаления
     async delete(req, res) {
-   /**     const { id } = req.params //получаю id устройства из параметров в deviceRouter (router.get('/:id', deviceController.getOne))
-        const device = await Device.findOne(
-            {
-                where: { id },
-                include: [{ model: DeviceInfo, as: 'info' }]
-            },
-        )*/ 
-        return res.json({message: "Удалить девайс"})
+        const id = parseInt(req.params.id) //получаю из запроса id
+  
+        const devices = await Device.findAndCountAll() //получил массив колонки и строки
+        const deviceInd = devices.rows.findIndex(item => item.id === id); //получил индекс по поиску
+        devices.rows.splice(deviceInd ,1)//найти его и удалить НО только здесь
+        
+        return res.json(devices)
     }
    
 }

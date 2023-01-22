@@ -26,14 +26,13 @@
            const hashPassword = await bcrypt.hash(password, 5) // хеширование пароля и сколько раз
            const user = await User.create({email, role, password: hashPassword}) // создаю пользоватеря передаю емеил роль пароль передаю захешированым
            const basket = await Basket.create({userId: user.id}) //создаю корзину и передаю туда id пользователя
-
            const token = generateJwt(user.id, user.email, user.role)//генерирую токен вызывая функцию 
             return res.json({token}) // после того как token сгенерирован возвращаем его на клиент. время 1.00
     }
 
     async login(req, res, next) {
         const { email, password } = req.body// из тела запроса получаю email, password
-        const user = await User.findOne({where: {email}}) //убедиться что польхзователь существует
+        const user = await User.findOne({where: {email}}) //убедиться что пользователь существует
         if (!user) {// если пользователь не найден возвр ошибку
             return next(ApiError.internal('Пользователь не найден') )
         }
@@ -45,7 +44,7 @@
         return res.json({ token })
     }
 
-    async check(req, res, next) {  
+    async check(req, res, next) {  // проверяет авторизован или нет
        // вся функция сводится к тому чтобу генерировать новый токен и отправлять его обратно на клиент
         // передаю все необходимые параметры в функию
         const token = generateJwt(req.user.id, req.user.email, req.user.role)

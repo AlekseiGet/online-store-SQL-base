@@ -22,6 +22,9 @@ app.get('/', (req, res) => {
     res.status(200).json({message: 'WORKING !!!'} )//200 значит запрос обработан правильно
 } )
 */
+
+
+
 /*мидлвеар который работает с ошибками ОБЯЗАТЕЛЬНО должен быть в конце
 Этот является замыкающим и поэтому внутри него не вызываем функцию next
 и на нем работа прекращается и вертаем на клиент ответ
@@ -29,13 +32,13 @@ app.get('/', (req, res) => {
 app.use(errorHandLer)
 
 
-const start = async() => {
+const start = async () => {
     try {
         await sequelize.authenticate()
-        await sequelize.sync()
+        await sequelize.sync()//сверяет состояние базы данных со схемой 11.25
         app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     } catch (e) {
-        console.log(e);
+        alert(`${e} server/index.js не стартанул Postgress`)
     }
 }
 

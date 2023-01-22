@@ -5,15 +5,14 @@ import NavBar from "./components/NavBar";
 import { observer } from 'mobx-react-lite';
 import { Context } from ".";
 import { check } from "./http/userApi";
-import Spinner from 'react-bootstrap/esm/Spinner'
-
+import { Spinner }from 'react-bootstrap'
 
 const App = observer(() => {
   const {user} = useContext(Context)
   const [loading, setLoading] = useState(true)//идёт загрузка или нет
 
   useEffect(() => {
-     check().then(data => {
+     check().then(data => {  // Тут что то не так
        user.setUser(true)
        user.setIsAuth(true)
      } ).finally(() => setLoading(false))

@@ -17,7 +17,7 @@ const CreateDevice = observer(({ show, onHide }) => {
      const [file, setFile] = useState(null)
    
     useEffect(() => {
-        fetchTypes().then(data => device.setIsTypes(data))
+        fetchTypes().then(data => device.setTypes(data))
         fetchBrand().then(data => device.setBrand(data))
     }, [])
     
@@ -59,8 +59,7 @@ const CreateDevice = observer(({ show, onHide }) => {
          formData.append('info', JSON.stringify(info))// массив перегоняю в строку, а на сервере будет парсипься обратно в массив
 
         createDevice(formData).then(data => onHide() )//В ней отправляем запрос на сервер
-     }
-           
+     }          
     return (
         <Modal
             show={show}

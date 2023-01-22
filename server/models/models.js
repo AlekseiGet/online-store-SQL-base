@@ -45,20 +45,20 @@ const DeviceInfo = sequelize.define('device_info', {
     description: { type: DataTypes.STRING, allowNull: false },
 })
 
-const TypeBrand = sequelize.define('type_brand', {
+const TypeBrand = sequelize.define('type_brand', {//связующая таблица
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 })
 
-User.hasOne(Basket)
-Basket.belongsTo(User)
+User.hasOne(Basket) //У пользователя одна корзина
+Basket.belongsTo(User)  //корзина принадлежит пользователю
 
-User.hasMany(Rating)
+User.hasMany(Rating) //пользователь может иметь несколько оценок
 Rating.belongsTo(User)
 
 Basket.hasMany(BasketDevice)
 BasketDevice.belongsTo(Basket)
 
-Type.hasMany(Device)
+Type.hasMany(Device) // Одному типу может принадлежать несколько устройств
 Device.belongsTo(Type)
 
 Brand.hasMany(Device)
@@ -75,7 +75,10 @@ DeviceInfo.belongsTo(Device)
 
 Type.belongsToMany(Brand, {through: TypeBrand})
 Brand.belongsToMany(Type, {through: TypeBrand})
-
+/*
+* Многие ко многим создаётся промежуточная таблица
+нужен второй аргумент -- {through: TypeBrand}
+*/
  module.exports = {
     User,
     Basket,

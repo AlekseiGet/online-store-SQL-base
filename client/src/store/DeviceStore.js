@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx"
-import  imagen  from "../image/12337140_2.jpg";
 
 export default class DeviceStore {
     constructor() {//он будет вызываться при создании объекта данного класса
@@ -8,13 +7,15 @@ export default class DeviceStore {
         this._devices = []
         this._selectedType ={}//для кликабельности
         this._selectedBrand = {}//для кликабельности
+        this._selectedDevice = {}
         this._page = 1 // отвечает за текущую страницу
         this._totalCount = 0  // за общее количество товара доступного по запросу
-        this._limit = 3 // колличество товара на одной станице
+        this._limit = 13 // колличество товара на одной станице
 
         makeAutoObservable(this)//mobx будет следить за изменениями компонента и при изменении компоненты будут перерендиваться ,будет показывать авторизован пользователь или нет
     }
-    setIsTypes(types) { 
+
+    setTypes(types) { 
         this._types= types
     } 
     setBrand(brands) {
@@ -30,6 +31,10 @@ export default class DeviceStore {
     setSelectedBrand(brand) {
         this.setPage(1) //чтобы при перезагрузке страницы при выборе начиналось с 1 страницы
         this._selectedBrand = brand
+    }
+    setSelectedDevice(devices) {
+        this.setPage(1) //чтобы при перезагрузке страницы при выборе начиналось с 1 страницы
+        this._selectedDevice = devices
     }
     setPage(page) {
         this._page = page
@@ -57,6 +62,9 @@ export default class DeviceStore {
     }
     get selectedBrand() {
         return this._selectedBrand
+    }
+    get selectedDevice() {
+        return this._selectedDevice
     }
     get totalCount() {
         return this._totalCount
