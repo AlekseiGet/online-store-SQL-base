@@ -1,5 +1,6 @@
  const {Brand} = require('../models/models')
  const ApiError = require('../error/ApiError')
+const Sequelize = require('../db')
 
 class BrandController {
     async create(req, res) {
@@ -13,12 +14,16 @@ class BrandController {
 
     }
     async delete(req, res) {
-        const id = parseInt(req.params.id) //получаю из запроса id
-  
-        const brands = await Brand.findAll()
-        const brandInd = brands.findIndex(item => item.id === id); //получил индекс по поиску
-        brands.splice(brandInd, 1)
+        const id = req.params.id //получаю из запроса id
 
+        let brands;
+        try {
+            brands = await Brand.sequelize.query(' DELETE FROM public.brands WHERE id = ?', {
+                replacements: [id]
+            })
+        } catch (e) {
+            console.error(e);
+        }
         return res.json(brands) 
     }
 

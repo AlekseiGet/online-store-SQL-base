@@ -9,6 +9,8 @@ const $host = axios.create({
 const $authHost = axios.create({
     baseURL: process.env.REACT_APP_API_URL
 })
+
+
 /** 
 Функция которая парметром принимает config  и в поле headers.authorization добавляем токен
  который будем получать по локальному ключу
@@ -25,5 +27,6 @@ $authHost.interceptors.request.use(authInterceptor)
  */
 export {
     $host,
-    $authHost
+    $authHost,
+  
 }

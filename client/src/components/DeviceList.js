@@ -6,7 +6,7 @@ import DeviseItem from './DeviseItem';
 
 const DeviceList = observer(() => {
     const { device } = useContext(Context)
-    console.log(device.devices)
+  //  console.log(device.devices)
     return (
         <Row className='d-flex' >
              {device.devices.map(device =>

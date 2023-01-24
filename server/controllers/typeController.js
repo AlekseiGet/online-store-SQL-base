@@ -1,5 +1,8 @@
 const {Type} = require('../models/models');
 const ApiError = require('../error/ApiError');
+const Sequelize = require('../db')
+//const { removeAllListeners } = require('nodemon');  // при включении этой хрени всё сломалось
+//const { removeTicks } = require('sequelize/types/utils');// при включении этой хрени всё сломалось
 
 class TypeController {
     async create(req, res) {
@@ -13,13 +16,15 @@ class TypeController {
 
     }
     async delete(req, res) {
-        const id =  req.params.id//получаю из запроса id
-       const types =  await Type.findByPk(id)   //Нашёл по id
-      //  const types = await Type.query(' DELETE FROM public.types WHERE id = $1', [id])
-     //    const types = await Type.findByIdAndDelete(id)  // Должен удалять но конечьно НЕТ
-        
-     //   const types = await Type.findAll()
-        return res.json(types)
+         const id =  req.params.id//получаю из запроса id
+        let types ;
+        try {
+            types = await Type.sequelize.query(' DELETE FROM public.types WHERE id = ?', {
+                replacements: [id]})
+        } catch (e) {
+            console.error(e);
+        }
+       return res.json(types)       
     }
     
 }
