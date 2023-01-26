@@ -58,11 +58,11 @@ const Auth = observer(() => {
                     <Form className='d-flex justify-content-between mt-3 pl-3 pr3' >
                         {isLogin ?
                              <div >
-                              Нет аккаунта?  <Link to={REGISTRATION_ROUTE} >Зарегестрируйтесь</Link>   
+                              Нет аккаунта?  <Link to={REGISTRATION_ROUTE} >Зарегестрироваться</Link>   
                             </div>
                         :
                             <div >
-                             Есть аккаунта?  <Link to={LOGIN_ROUTE} >Войдите</Link>
+                             Есть аккаунта?  <Link to={LOGIN_ROUTE} >Входите</Link>
                             </div>
                         }
                        
