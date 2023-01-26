@@ -8,7 +8,7 @@ import DevicePage from "./pages/DevicePage"
 
 //Только для авторизованых пользователей
 export const authRoutes = [
-    {path: ADMIN_ROUTE , Component: Admin }, //
+  //  {path: ADMIN_ROUTE , Component: Admin }, 
     {path: BASKET_ROUTE, Component: Basket}
 ]
 
@@ -19,3 +19,9 @@ export const publicRoutes = [
     {path: REGISTRATION_ROUTE, Component: Auth},
     {path: DEVICE_ROUTE + '/:id' ,  Component: DevicePage }
   ]
+
+  //Только для Админа
+export const adminRoutes = [
+    { path: ADMIN_ROUTE, Component: Admin }, //
+ //   { path: BASKET_ROUTE, Component: Basket }
+]

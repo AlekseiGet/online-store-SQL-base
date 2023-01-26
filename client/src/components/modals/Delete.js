@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/esm/Modal';
 import Form from 'react-bootstrap/esm/Form';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 import { Context } from '../../';
-import { fetchTypes, fetchBrand, fetchDevice, deleteType } from '../../http/deviceApi';
+import { fetchTypes, fetchBrand, fetchDevice, deleteType, deleteBrand, deleteDevice } from '../../http/deviceApi';
 import { observer } from 'mobx-react-lite';
 
 const Delete = observer(({ show, onHide }) => {
@@ -26,10 +26,15 @@ const Delete = observer(({ show, onHide }) => {
     }, [])
 
     const deletDevice = () => {
-     //   createType({ name: value }).then(data => setValue(''))
-      //  onHide()
-        alert(`удалить "${device.selectedDevice.name }" ?`)
-      }
+        if (device.selectedDevice.name) {
+            alert(`удалить "${device.selectedDevice.name}" ?`)
+            deleteDevice({ id: device.selectedDevice.id })
+        } else {
+            alert('Не выбрал - нечего удалять')
+        }
+
+        onHide()
+    }
 
     const deletType = () => {
         if (device.selectedType.name) {
@@ -44,7 +49,14 @@ const Delete = observer(({ show, onHide }) => {
     }
 
     const deletBrand = () => {
-        alert(`удалить "${device.selectedBrand.name }" ?`)
+        if (device.selectedBrand.name) {
+            alert(`удалить "${device.selectedBrand.name}" ?`)
+            deleteBrand({ id: device.selectedBrand.id })
+        } else {
+            alert('Не выбрал - нечего удалять')
+        }
+
+        onHide()
     }
 
     return (

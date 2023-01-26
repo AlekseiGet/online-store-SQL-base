@@ -72,13 +72,25 @@ class DviceController {
     }
     //функция удаления
     async delete(req, res) {
-        const id = parseInt(req.params.id) //получаю из запроса id
-  
-        const devices = await Device.findAndCountAll() //получил массив колонки и строки
-        const deviceInd = devices.rows.findIndex(item => item.id === id); //получил индекс по поиску
-        devices.rows.splice(deviceInd ,1)//найти его и удалить НО только здесь
+        const id = req.params.id//получаю из запроса id
+        let devices;
+        try {
+            devices = await Device.sequelize.query(' DELETE FROM public.devices WHERE id = ?', {
+                replacements: [id]
+            })
+        } catch (e) {
+            console.error(e);
+        }
+       
+
         
-        return res.json(devices)
+    //    const id = parseInt(req.params.id) //получаю из запроса id
+  
+    //    const devices = await Device.findAndCountAll() //получил массив колонки и строки
+   //     const deviceInd = devices.rows.findIndex(item => item.id === id); //получил индекс по поиску
+    //    devices.rows.splice(deviceInd ,1)//найти его и удалить НО только здесь
+        
+        return res.json(id)
     }
    
 }
