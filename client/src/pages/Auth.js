@@ -28,6 +28,9 @@ const Auth = observer(() => {
              }
                  user.setUser(data)//сохратяю данные о пользователе data или user?
                  user.setIsAuth(true)
+                 if (user.user.role === "ADMIN") {
+                     user.setIsAdmin(true)
+                 }
                  history(SHOP_ROUTE)
         } catch (e) {
             alert(e.response.data.message)

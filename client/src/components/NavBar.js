@@ -19,9 +19,8 @@ const NavBar =  observer(() => {
     const logOut = () => {
         user.setUser({})
         user.setIsAuth(false)
+        user.setIsAdmin(false)
     }
-
-
  
     
     return (
@@ -31,6 +30,7 @@ const NavBar =  observer(() => {
             {user.isAdmin ?
                     <Nav className="ml-auto" >
                         <Button variant={'outline-light'} onClick={() => history(ADMIN_ROUTE)} className="me-2">Админ Панель</Button>
+                        <Button variant={'outline-light '} >{user.user.email}</Button>
                         <Button variant={'outline-light'} onClick={() => logOut()} className="me-2">Выйти</Button>
                     </Nav>
              : user.isAuth ?
