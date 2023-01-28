@@ -50,6 +50,12 @@
         const token = generateJwt(req.user.id, req.user.email, req.user.role)
         return res.json({token})
     }
+
+      async getAll(req, res) {//находить всех пользователей
+          const users = await User.findAll()
+          return res.json(users)
+
+      }
 }
 
 module.exports = new UserController()

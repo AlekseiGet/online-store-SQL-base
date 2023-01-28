@@ -9,9 +9,12 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '..';
 import { fetchTypes, fetchBrand, fetchDevice } from '../http/deviceApi';
 import Pages from '../components/Pages';
+import { fetchUser } from '../http/userApi';
+import MyLoader from '../components/ui/loader/MyLoader';
 
 const Shop = observer(() => {
     const {device} = useContext(Context)
+    const {user} = useContext(Context)
   
     useEffect(()=> {
         fetchTypes().then(data => device.setTypes(data))
@@ -29,6 +32,8 @@ const Shop = observer(() => {
         })
     }, [device.page, device.selectedType, device.selectedBrand])//будет вызываться каждый раз когда изменим страницу, бренд , тип
 
+    
+
     return (
         <Container>
             <Row className='mt-2'>
@@ -40,7 +45,7 @@ const Shop = observer(() => {
                      <DeviceList/>
                      <Pages/>
                 </Col>
-           
+              
             </Row>
         </Container>
        

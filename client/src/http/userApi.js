@@ -28,3 +28,14 @@ export const check = async () => { //проверка
        return jwt_decode(data.token)
 }
  
+//запрос пользователей
+ export const allUser = async() => {
+     const { data } = await $host.get('api/user')
+     localStorage.setItem('token', data.token)
+     return data
+ }
+
+export const fetchUser = async () => { //без него нет списка пользователей
+    const { data } = await $host.get('api/user')
+    return data
+}

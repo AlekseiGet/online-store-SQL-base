@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Context } from '../..';
 import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/esm/Modal';
@@ -6,26 +6,42 @@ import Form from 'react-bootstrap/esm/Form';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
-import { registrationAdmin } from '../../http/userApi';
-import { SHOP_ROUTE } from '../../utils/consts';
+import { registrationAdmin, allUser } from '../../http/userApi';
+import { ADMIN_ROUTE } from '../../utils/consts';
+import { fetchUser } from '../../http/userApi';
+import MyLoader from '../ui/loader/MyLoader';
 
 const ChangeAdmin = observer(({ show, onHide }) => {
-  const {user} = useContext(Context) 
+    const {user} = useContext(Context) 
     const history = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const tru = user.allUsers.length// невозможно нарисовать пока нет ответа поэтому нужен Loader
 
-    const click = async () => {
+    useEffect(() => {//без него нет списка пользователей
+        fetchUser().then(data => user.setAllUsers(data))
+    }, [])
+  
+    const users = async ()=> {      
+     //   let data = await allUser() //работает и без 
+     //       user.setAllUsers(data) // этого всего
+      //  console.log(user.selectedUser);
+            history(ADMIN_ROUTE)
+    }
+
+    const click = async () => {//регестрирую нового админа
         try {
             let data = await registrationAdmin(email, password)
-                 user.setUser(data)//сохратяю данные о пользователе data или user?
-                 history(SHOP_ROUTE)
+            user.setUser(data)
+            history(ADMIN_ROUTE)
         } catch (e) {
             alert(e.response.data.message)
         }
         
     }
 
+//{user.selectedUser || 'Забрать право администратора' }--- Здесь ошибка
+   
     return (
         <Modal
             show={show}
@@ -41,14 +57,18 @@ const ChangeAdmin = observer(({ show, onHide }) => {
             <Modal.Body>
                 <Form>
                     <Dropdown className='mt-2 mb-2'>
-                        <Dropdown.Toggle  >'Забрать право администратора' </Dropdown.Toggle>
+                        <Dropdown.Toggle  >{user.selectedUser || 'Забрать право администратора' }  </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item>
-                              Здесь должен быть список у кого права администратора
                             
-                            </Dropdown.Item>                       
+                            {tru
+                               ?user.allUsers.map(onUser =>
+                                   <Dropdown.Item onClick={() => user.setSelectedUser(onUser.email)}  key={onUser.id}>{onUser.email}</Dropdown.Item>
+                                )
+                               : <MyLoader/>
+                           }
+                           
                         </Dropdown.Menu>
-                        <Button variant={"outline-succes"} onClick={onHide}>Лишить права ?</Button>
+                        <Button variant={"outline-succes"} onClick={users}>Лишить права ?</Button>
                     </Dropdown>
                     <Dropdown className='mt-2 mb-2'>
                         'Создать администратора' 
