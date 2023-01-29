@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/esm/Form';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
-import { registrationAdmin, allUser } from '../../http/userApi';
+import { registrationAdmin, allUser, changeRole } from '../../http/userApi';
 import { ADMIN_ROUTE } from '../../utils/consts';
 import { fetchUser } from '../../http/userApi';
 import MyLoader from '../ui/loader/MyLoader';
@@ -22,11 +22,14 @@ const ChangeAdmin = observer(({ show, onHide }) => {
         fetchUser().then(data => user.setAllUsers(data))
     }, [])
   
-    const users = async ()=> {      
-     //   let data = await allUser() //работает и без 
-     //       user.setAllUsers(data) // этого всего
-      //  console.log(user.selectedUser);
-            history(ADMIN_ROUTE)
+    const users = async ()=> {  
+        if (user.allUsers.length <= 1) {
+        alert("Нельзя удалять");
+   } else {
+         changeRole( user.selectedUser.id) 
+        alert(`Теперь он USER ${user.selectedUser.id}`) 
+   }     
+         history(ADMIN_ROUTE)
     }
 
     const click = async () => {//регестрирую нового админа
@@ -39,9 +42,7 @@ const ChangeAdmin = observer(({ show, onHide }) => {
         }
         
     }
-
-//{user.selectedUser || 'Забрать право администратора' }--- Здесь ошибка
-   
+ 
     return (
         <Modal
             show={show}
@@ -57,21 +58,19 @@ const ChangeAdmin = observer(({ show, onHide }) => {
             <Modal.Body>
                 <Form>
                     <Dropdown className='mt-2 mb-2'>
-                        <Dropdown.Toggle  >{user.selectedUser || 'Забрать право администратора' }  </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            
+                        <Dropdown.Toggle  >{user.selectedUser.name || 'Забрать право администратора' }  </Dropdown.Toggle>
+                        <Dropdown.Menu>                
                             {tru
                                ?user.allUsers.map(onUser =>
-                                   <Dropdown.Item onClick={() => user.setSelectedUser(onUser.email)}  key={onUser.id}>{onUser.email}</Dropdown.Item>
+                                   <Dropdown.Item onClick={() => user.setSelectedUser({ name: onUser.email, role: onUser.role, id: onUser.id })} key={onUser.id}>имя: {onUser.email},  права: {onUser.role}</Dropdown.Item>
                                 )
                                : <MyLoader/>
-                           }
-                           
+                           }                       
                         </Dropdown.Menu>
                         <Button variant={"outline-succes"} onClick={users}>Лишить права ?</Button>
                     </Dropdown>
                     <Dropdown className='mt-2 mb-2'>
-                        'Создать администратора' 
+                        'Создать нового администратора' 
                         <Form.Control
                             className='mt-3'
                             placeholder='введите ваш адресс...'

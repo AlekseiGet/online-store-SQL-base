@@ -51,10 +51,26 @@
         return res.json({token})
     }
 
-      async getAll(req, res) {//находить всех пользователей
-          const users = await User.findAll()
+      async getAll(req, res) {//находить всех пользователей с ролью АДМИН
+          const users = await User.findAll({
+            where: {
+                role: "ADMIN"
+            }
+          })
           return res.json(users)
+      }
 
+      async replaceRole(req, res) {//находить одного пользрвателя и меняю права на user
+          const id = req.params.id
+          let user;
+          try {
+            user = await User.sequelize.query("UPDATE public.users SET role = 'USER':: character varying WHERE id = ?", {             
+              replacements: [id]
+          })
+          } catch (e) {
+              console.error(e);
+          }
+          return res.json(user)
       }
 }
 

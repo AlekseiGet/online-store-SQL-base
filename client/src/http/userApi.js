@@ -27,6 +27,11 @@ export const check = async () => { //проверка
        localStorage.setItem('token', data.token)
        return jwt_decode(data.token)
 }
+
+export const changeRole = async(id) => { // изменяет роль пользователя на USER
+    const { data } = await $authHost.patch('api/user/' + id)
+    return data
+}
  
 //запрос пользователей
  export const allUser = async() => {
@@ -39,3 +44,4 @@ export const fetchUser = async () => { //без него нет списка п�
     const { data } = await $host.get('api/user')
     return data
 }
+

@@ -81,15 +81,7 @@ class DviceController {
         } catch (e) {
             console.error(e);
         }
-       
-
-        
-    //    const id = parseInt(req.params.id) //получаю из запроса id
-  
-    //    const devices = await Device.findAndCountAll() //получил массив колонки и строки
-   //     const deviceInd = devices.rows.findIndex(item => item.id === id); //получил индекс по поиску
-    //    devices.rows.splice(deviceInd ,1)//найти его и удалить НО только здесь
-        
+          
         return res.json(id)
     }
    
