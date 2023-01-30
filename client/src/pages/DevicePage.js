@@ -12,7 +12,7 @@ import { fetchOneDevice } from '../http/deviceApi';
 
 const DevicePage = () => {
     
-      const [device, setDevice] =useState({info: []})
+      const [device, setDevice] = useState({info: []})
       const {id} = useParams()//параметры строки запроса
       useEffect(() => {
         fetchOneDevice(id).then(data => setDevice(data))

@@ -11,7 +11,7 @@ const Pages = observer(() => {
    for (let i = 0; i < pagesCount; i++) {
      pages.push(i + 1) // цепляю текущий счётчик в цикле и + 1 это будет номер страници
    }
-     //выделяю как то страницу active={device.page === page}  то она будет акетивной
+     //выделяю как то страницу active={device.page === page}  то она будет активной
    return (
         <Pagination className= 'mt-5'>
             {pages.map(page => 

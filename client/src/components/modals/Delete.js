@@ -13,7 +13,7 @@ const Delete = observer(({ show, onHide }) => {
     const [value, setValue] = useState('')  
 
     useEffect(() => {
-        fetchDevice(device.selectedType.id, device.selectedBrand.id, device.page, 2).then(data => {   //выбраный тип из DeviceStore, выбраный бренд, текущая страница полученая из STORE, limit
+        fetchDevice(device.selectedType.id, device.selectedBrand.id, device.page, 13).then(data => {   //выбраный тип из DeviceStore, выбраный бренд, текущая страница полученая из STORE, limit
             device.setDevice(data.rows)
             device.setTotalCount(data.count)//узнать сколько товара получили после запроса
         })

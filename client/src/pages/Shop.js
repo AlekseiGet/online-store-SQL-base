@@ -11,6 +11,7 @@ import { fetchTypes, fetchBrand, fetchDevice } from '../http/deviceApi';
 import Pages from '../components/Pages';
 import { fetchUser } from '../http/userApi';
 import MyLoader from '../components/ui/loader/MyLoader';
+import Error from './Error';
 
 const Shop = observer(() => {
     const {device} = useContext(Context)
@@ -19,20 +20,18 @@ const Shop = observer(() => {
     useEffect(()=> {
         fetchTypes().then(data => device.setTypes(data))
         fetchBrand().then(data => device.setBrand(data))
-        fetchDevice(null,  null, 1, 12).then(data => {   //typeId, brandId, текущая страница, ограниченое по количеству  ЗДЕСЬ
+        fetchDevice(null,  null, 1, 13).then(data => {   //typeId, brandId, текущая страница, ограниченое по количеству  ЗДЕСЬ
              device.setDevice(data.rows)
              device.setTotalCount(data.count)//узнать сколько товара получили после запроса
             })
     }, [])
 
     useEffect(()=>{
-        fetchDevice(device.selectedType.id, device.selectedBrand.id, device.page, 2).then(data => {   //выбраный тип из DeviceStore, выбраный бренд, текущая страница полученая из STORE, limit
+        fetchDevice(device.selectedType.id, device.selectedBrand.id, device.page, 13).then(data => {   //выбраный тип из DeviceStore, выбраный бренд, текущая страница полученая из STORE, limit ЗДЕСЬ
             device.setDevice(data.rows)
             device.setTotalCount(data.count)//узнать сколько товара получили после запроса
         })
     }, [device.page, device.selectedType, device.selectedBrand])//будет вызываться каждый раз когда изменим страницу, бренд , тип
-
-    
 
     return (
         <Container>
@@ -40,11 +39,17 @@ const Shop = observer(() => {
                 <Col md={3}>
                     <TypeBar/>
                 </Col>
-                <Col md={9}>
+                { device.devices ?
+                     <Col md={9}>
                      <BrandVBar/>
                      <DeviceList/>
                      <Pages/>
                 </Col>
+                                 :
+                     <Error/>
+                    
+                }
+                
                 <ul>
                     <li>при перезагрузке теряются права</li>
                     <li>Корзина не работает</li>
@@ -52,7 +57,6 @@ const Shop = observer(() => {
                     <li>Удаление из корзины</li>
                     <li>При отсутсвии соединения с интернетом  как то пусто</li>
                     <li>Не обработаны ошибки</li>
-                    <li>На этой странице загружает то все то половина device</li>
                 </ul>
               
             </Row>
@@ -63,4 +67,3 @@ const Shop = observer(() => {
 
 export default Shop;
 
-//"Основная страница"
