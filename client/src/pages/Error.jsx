@@ -1,9 +1,10 @@
 import React from 'react';
+import imeg from "../image/eixlhkekipzeev93x7y6jf4beky4qyec.jpg";
 
 const Error = () => {
     return (
         <div>
-            Что то пошло не так.
+            <img src={imeg} alt="картинка" />
         </div>
     );
 };

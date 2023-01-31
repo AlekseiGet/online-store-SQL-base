@@ -19,8 +19,8 @@ const Auth = observer(() => {
 
     //функция под регистрацию и под регистрацию
     const click = async () => {
+           let data;
         try {
-            let data;
              if (isLogin) {
                  data = await login(email, password)  
              }else {

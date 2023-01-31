@@ -64,7 +64,7 @@
           const id = req.params.id
           let user;
           try {
-            user = await User.sequelize.query("UPDATE public.users SET role = 'USER':: character varying WHERE id = ?", {             
+              user = await User.sequelize.query("UPDATE public.users SET role = 'USER' WHERE id = ?", {   //:: character varying приведение к типу оказалось ненужно          
               replacements: [id]
           })
           } catch (e) {
