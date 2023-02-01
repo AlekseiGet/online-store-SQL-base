@@ -1,5 +1,5 @@
 import React from 'react';
-import imeg from "../image/eixlhkekipzeev93x7y6jf4beky4qyec.jpg";
+import imeg from "../image/404.jpg";
 
 const Error = () => {
     return (

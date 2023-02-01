@@ -20,6 +20,7 @@ const NavBar =  observer(() => {
         user.setUser({})
         user.setIsAuth(false)
         user.setIsAdmin(false)
+        history(SHOP_ROUTE)
     }
  
     

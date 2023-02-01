@@ -39,7 +39,8 @@ class DviceController {
     }
     //получение по запросе 
     async getAll(req, res) {
-        let {brandId, typeId, limit, page} = req.query
+        try {
+            let {brandId, typeId, limit, page} = req.query
         page = page || 1 // по умолчанию одна странца
         limit = limit || 9  //по умолчанию не больше 9
         let offset = page * limit - limit// отступ
@@ -58,10 +59,16 @@ class DviceController {
             devices = await Device.findAndCountAll({ where: {typeId ,  brandId}, limit, offset })
         }
         return res.json(devices)
+        } catch (e) {
+            next(ApiError.badRequest(e.messsage)) 
+        }
+        
     }
+
     //фунуция получения одного конкретного девайса по id устройства 53.00
     async getOne(req, res) {
-        const {id} = req.params //получаю id устройства из параметров в deviceRouter (router.get('/:id', deviceController.getOne))
+        try {
+            const {id} = req.params //получаю id устройства из параметров в deviceRouter (router.get('/:id', deviceController.getOne))
         const device = await Device.findOne(
             {
                 where: { id },
@@ -69,6 +76,10 @@ class DviceController {
             },
         )
         return res.json(device)
+        } catch (error) {
+            next(ApiError.badRequest(e.messsage)) 
+        }
+        
     }
     //функция удаления
     async delete(req, res) {
@@ -78,11 +89,10 @@ class DviceController {
             devices = await Device.sequelize.query(' DELETE FROM public.devices WHERE id = ?', {
                 replacements: [id]
             })
+            return res.json(id)
         } catch (e) {
-            console.error(e);
-        }
-          
-        return res.json(id)
+            next(ApiError.badRequest(e.messsage)) 
+        }  
     }
    
 }
