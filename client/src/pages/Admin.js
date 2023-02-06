@@ -8,21 +8,16 @@ import CreateType from '../components/modals/CreateType';
 import Delete from '../components/modals/Delete'; 
 import { Context } from '..';
 import { useNavigate } from 'react-router-dom';
-import { SHOP_ROUTE } from '../utils/consts';
 import { Row } from 'react-bootstrap';
 
 const Admin = () => {
     const { user } = useContext(Context)
-    const history = useNavigate()
     const [brandViseble, setBrandViseble ] = useState(false)
     const [typeViseble, setTypeViseble] = useState(false)
     const [deviceViseble, setDeviceViseble] = useState(false)
     const [deleteViseble, setDeleteViseble] = useState(false)
     const [changeAdminViseble, setChangeAdminViseble] = useState(false)
-   //const notAdmin = useEffect(()=> {history(SHOP_ROUTE) },[user.isAdmin])  
 
-   // console.log(user.isAdmin);
-         
     return (
         <Container className='d-flex flex-column' >
             {user.isAdmin ? 
@@ -43,13 +38,7 @@ const Admin = () => {
                <h1>Не Админу здесь делать нечего.</h1>
 }
         </Container >
-
-
-
-    )
-    
-        //  useEffect(() => { history(SHOP_ROUTE) }, [user.isAdmin])
-  
+    ) 
     
 };
 

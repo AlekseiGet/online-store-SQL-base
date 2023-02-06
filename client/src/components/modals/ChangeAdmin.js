@@ -38,7 +38,7 @@ const ChangeAdmin = observer(({ show, onHide }) => {
             user.setUser(data)
             history(ADMIN_ROUTE)
         } catch (e) {
-            alert(e.response.data.message)
+            alert("Ничего не получилось")
         }
         
     }

@@ -19,7 +19,7 @@ module.exports = function (role) {
             req.user = decoded //в поле user добавляем данные которые вытащили и во всех функциях он будет доступен
             next()
         } catch (e) {
-            return res.status(401).json({ message: "Не авторизован" })
+           res.status(401).json({ message: "Не авторизован" })
         }
     }
 

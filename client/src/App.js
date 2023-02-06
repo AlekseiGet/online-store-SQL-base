@@ -13,10 +13,12 @@ const App = observer(() => {
 
   useEffect(() => {
      check().then(data => {  // Тут что то не так
-       user.setUser(true)
-       user.setIsAuth(true)
+      // user.setUser(true)//не понял зачем изменил на true
+     //user.setIsAuth(true)
      } ).finally(() => setLoading(false))
   },[])//массив пустой  -- отработает один раз - при запуске
+
+
 
   if (loading) {
     return <Spinner animation={'grow'}/>

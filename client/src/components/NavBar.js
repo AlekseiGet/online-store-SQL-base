@@ -23,7 +23,6 @@ const NavBar =  observer(() => {
         history(SHOP_ROUTE)
     }
  
-    
     return (
        <Navbar bg="dark" variant="dark">
          <Container>          

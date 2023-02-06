@@ -27,7 +27,7 @@ const Delete = observer(({ show, onHide }) => {
 
     const deletDevice = () => {
         if (device.selectedDevice.name) {
-            alert(`удалить "${device.selectedDevice.name}" ?`)
+            alert(`удалили "${device.selectedDevice.name}" ?`)
             deleteDevice({ id: device.selectedDevice.id })
         } else {
             alert('Не выбрал - нечего удалять')
@@ -38,7 +38,7 @@ const Delete = observer(({ show, onHide }) => {
 
     const deletType = () => {
         if (device.selectedType.name) {
-            alert(`удалить "${device.selectedType.name }" ?`)
+            alert(`удалили "${device.selectedType.name }" ?`)
             deleteType({ id: device.selectedType.id })
         } else {
             alert('Не выбрал - нечего удалять')
@@ -50,7 +50,7 @@ const Delete = observer(({ show, onHide }) => {
 
     const deletBrand = () => {
         if (device.selectedBrand.name) {
-            alert(`удалить "${device.selectedBrand.name}" ?`)
+            alert(`удалили "${device.selectedBrand.name}" ?`)
             deleteBrand({ id: device.selectedBrand.id })
         } else {
             alert('Не выбрал - нечего удалять')

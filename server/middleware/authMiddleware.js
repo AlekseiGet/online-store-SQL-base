@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = function (req, res, next) {
-   return function (req, res, next) {
+  
    if (req.method === "OPTIONS") {
       next()
    } 
@@ -16,6 +16,6 @@ module.exports = function (req, res, next) {
        req.user = decoded //в поле user добавляем данные которые вытащили и во всех функциях он будет доступен
        next()
    } catch (e) {
-      return res.status(401).json({message: "Не авторизован"})
-   }}
+     res.status(401).json({message: "Не авторизован"})
+   }
 }

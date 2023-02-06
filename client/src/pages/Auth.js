@@ -8,6 +8,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { login, registration } from '../http/userApi';
 import { observer } from 'mobx-react-lite';
 import { Context } from '..';
+import { Row } from 'react-bootstrap';
 
 const Auth = observer(() => {
     const {user} = useContext(Context)
@@ -17,7 +18,7 @@ const Auth = observer(() => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    //функция под регистрацию и под регистрацию
+    //функция под регистрацию и под вход
     const click = async () => {
            let data;
         try {
@@ -33,7 +34,7 @@ const Auth = observer(() => {
                  }
                  history(SHOP_ROUTE)
         } catch (e) {
-            alert(e.response.data.message)
+            alert(e.message)
         }
         
     }
@@ -44,7 +45,7 @@ const Auth = observer(() => {
         style={{height: window.innerHeight - 54}} >
             <Card style={{width: 600}} className="p-5 " >
                 <h2  className='m-auto' >{isLogin ? "Авторизация" : "Регистрация" } </h2>
-                <Form className='d-flex flex-column' >
+                <Row className='d-flex flex-column' >
                     <Form.Control
                     className='mt-3'
                     placeholder='введите ваш адресс...'
@@ -74,7 +75,7 @@ const Auth = observer(() => {
                         </Button>
                     </Form>
                     
-                </Form>
+                </Row>
             </Card>
         </Container>
     );

@@ -5,7 +5,6 @@ import Image from 'react-bootstrap/esm/Image';
 import Row from 'react-bootstrap/esm/Row';
 import BigStar from "../assets/VeryBigStar.png"
 import Card from 'react-bootstrap/esm/Card';
-import imagen from "../image/12337140_2.jpg";
 import Button from 'react-bootstrap/esm/Button';
 import { useParams } from 'react-router-dom';
 import { fetchOneDevice } from '../http/deviceApi';
@@ -14,6 +13,7 @@ const DevicePage = () => {
     
       const [device, setDevice] = useState({info: []})
       const {id} = useParams()//параметры строки запроса
+      
       useEffect(() => {
         fetchOneDevice(id).then(data => setDevice(data))
       },[] )
