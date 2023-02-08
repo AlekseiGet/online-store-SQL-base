@@ -34,7 +34,7 @@ const Auth = observer(() => {
                  }
                  history(SHOP_ROUTE)
         } catch (e) {
-            alert(e.message)
+            alert(`${e.message} сделай перебор ошибок`)
         }
         
     }

@@ -22,8 +22,12 @@ export const deleteBrand = async (brand) => {
 }
 
 export const createDevice = async (device) => {
-    const { data } = await $authHost.post('api/device', device)
-    return data
+    try {
+        const { data } = await $authHost.post('api/device', device)
+        return data
+    } catch (e) {
+        alert("Поля не заполнены!!!")
+    }   
 }
 
 export const deleteDevice = async (device) => {

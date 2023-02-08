@@ -8,21 +8,33 @@ import Card from 'react-bootstrap/esm/Card';
 import Button from 'react-bootstrap/esm/Button';
 import { useParams } from 'react-router-dom';
 import { fetchOneDevice } from '../http/deviceApi';
+import MyLoader from '../components/ui/loader/MyLoader';
+import replacement from "../image/404.jpg";
 
 const DevicePage = () => {
     
       const [device, setDevice] = useState({info: []})
       const {id} = useParams()//параметры строки запроса
-      
+      const [foto, setFoto] = useState(replacement)
+    
       useEffect(() => {
         fetchOneDevice(id).then(data => setDevice(data))
       },[] )
-
+      
+      useEffect(()=>{
+        if (device.img) {
+                setFoto(process.env.REACT_APP_API_URL + device.img)           
+        }          
+      }, [device])
+      
+      const notImage = ()=> {
+          setFoto(replacement)
+      } 
     return (
         <Container className='mt-3' >
             <Row>
                <Col nd={4}>
-                    <Image width={300} height={300} src={process.env.REACT_APP_API_URL + device.img} />
+                    <Image width={600} height={600} src={foto} onError={notImage}/>
                </Col> 
                <Col nd={4}>
                    <Row className='d-flex flex-column align-items-center ' >

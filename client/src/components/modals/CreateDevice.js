@@ -59,7 +59,8 @@ const CreateDevice = observer(({ show, onHide }) => {
          formData.append('info', JSON.stringify(info))// массив перегоняю в строку, а на сервере будет парсипься обратно в массив
 
         createDevice(formData).then(data => onHide() )//В ней отправляем запрос на сервер
-     }          
+     } 
+     
     return (
         <Modal
             show={show}
@@ -112,7 +113,7 @@ const CreateDevice = observer(({ show, onHide }) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant={"outline-danger"} onClick={onHide}>Закрыть</Button>
-                <Button variant={"outline-succes"} onClick={addDevice}>Добавить</Button>
+                <Button variant={"outline-succes"} onClick={addDevice} >Добавить</Button>
             </Modal.Footer>
         </Modal>
     );
