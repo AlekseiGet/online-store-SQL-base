@@ -21,6 +21,8 @@ export const deleteBrand = async (brand) => {
     return data
 }
 
+
+
 export const createDevice = async (device) => {
     try {
         const { data } = await $authHost.post('api/device', device)
@@ -34,6 +36,25 @@ export const deleteDevice = async (device) => {
     const { data } = await $authHost.delete('api/device/' + device.id)
     return data
 }
+
+
+
+
+
+
+export const addBasketDevice = async (device) => {
+    const { data } = await $authHost.post('api/basket', device)
+    return data
+}
+
+export const fetchBasket = async (id) => {
+  const { data } = await $host.get('api/basket', id)
+    return data 
+}/** */
+
+
+
+
 
 export const fetchTypes = async () => {
     const { data } = await $host.get('api/type')

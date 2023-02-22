@@ -20,18 +20,18 @@
            }
 
            const candidate =  await User.findOne({where: {email}})
-           if (candidate) {
-               return next(ApiError.badRequest('Пользователь с таким email уже существует '))
-           }
+                if (candidate) {
+                    return next(ApiError.badRequest('Пользователь с таким email уже существует '))
+                }
 
-           const hashPassword = await bcrypt.hash(password, 5) // хеширование пароля и сколько раз
-           const user = await User.create({email, role, password: hashPassword}) // создаю пользоватеря передаю емеил роль пароль передаю захешированым
-           const basket = await Basket.create({userId: user.id}) //создаю корзину и передаю туда id пользователя
-           const token = generateJwt(user.id, user.email, user.role)//генерирую токен вызывая функцию 
-            return res.json({token}) // после того как token сгенерирован возвращаем его на клиент. время 1.00
-        } catch (e) {
-            next(ApiError.badRequest(e.messsage)) 
-        }
+                const hashPassword = await bcrypt.hash(password, 5) // хеширование пароля и сколько раз
+                const user = await User.create({email, role, password: hashPassword}) // создаю пользоватеря передаю емеил роль пароль передаю захешированым
+            const basket = await Basket.create({ userId: user.id}) //создаю корзину и передаю туда id пользователя
+                const token = generateJwt(user.id, user.email, user.role)//генерирую токен вызывая функцию 
+                 return res.json({token}) // после того как token сгенерирован возвращаем его на клиент. время 1.00
+             } catch (e) {
+                 next(ApiError.badRequest(e.messsage)) 
+             }
            
     }
 
@@ -79,6 +79,7 @@
             next(ApiError.badRequest(e.messsage)) 
         }         
       }
+      
       async replaceRole(req, res) {//находить одного пользрвателя и меняю права на user      
           try {
               const id = req.params.id

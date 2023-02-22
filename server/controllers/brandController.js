@@ -6,8 +6,9 @@ class BrandController {
     async create(req, res) {
         try {
             const { name } = req.body // Здесь может быть косяк
-            const brand = await Brand.create({ name })
+                const brand = await Brand.create({ name })
             return res.json(brand)
+            
         } catch (e) {
             next(ApiError.badRequest(e.messsage)) 
         }       

@@ -13,7 +13,7 @@ const CreateDevice = observer(({ show, onHide }) => {
      const {device} = useContext(Context)
      const [info, setInfo] = useState([])
      const [name, setName] = useState('')
-     const [price, setPrice] = useState(0)
+     const [price, setPrice] = useState()// был 0
      const [file, setFile] = useState(null)
    
     useEffect(() => {

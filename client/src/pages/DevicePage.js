@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { Context } from '../index';
 import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Image from 'react-bootstrap/esm/Image';
@@ -10,9 +11,11 @@ import { useParams } from 'react-router-dom';
 import { fetchOneDevice } from '../http/deviceApi';
 import MyLoader from '../components/ui/loader/MyLoader';
 import replacement from "../image/404.jpg";
+import { addBasketDevice } from '../http/deviceApi'
+
 
 const DevicePage = () => {
-    
+      const { user } = useContext(Context)
       const [device, setDevice] = useState({info: []})
       const {id} = useParams()//параметры строки запроса
       const [foto, setFoto] = useState(replacement)
@@ -30,6 +33,21 @@ const DevicePage = () => {
       const notImage = ()=> {
           setFoto(replacement)
       } 
+
+    const addToCart = () =>{
+        alert(`Добавил ${device.id}`)
+        
+        const formData = new FormData()
+        formData.append('basketId', user.user.id)  
+        formData.append('deviceId', device.id) 
+        addBasketDevice(formData)
+    }
+    
+    const buy = () => {
+        alert("Купить")
+    }
+
+  // console.log(device);
     return (
         <Container className='mt-3' >
             <Row>
@@ -51,7 +69,12 @@ const DevicePage = () => {
                     style={{width: 300, height: 300, fontSize: 32, border: '5px solid lightgray' }}
                     >
                      <h3>От: {device.price} рубл.</h3>
-                     <Button variant={'outline-dark'} >Добавить в корзину</Button>
+                        {user.isAuth ?
+                          <Button variant={'outline-dark'} onClick={addToCart}>Добавить в корзину</Button>
+                          :
+                            <Button variant={'outline-dark'} onClick={buy}>Купить</Button>
+                     }
+                        
                    </Card>
                </Col>
             </Row>

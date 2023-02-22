@@ -21,8 +21,6 @@ export const login = async (email, password) => { //вход сеществую�
     localStorage.setItem('token', data.token)
     return jwt_decode(data.token)
 }
- 
-
 
  export const registrationAdmin = async (email, password) => {//регистрация Админа
        const {data} = await $host.post('api/user/registration', {email, password, role: 'ADMIN'})

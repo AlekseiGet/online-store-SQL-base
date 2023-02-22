@@ -12,6 +12,7 @@ import Pages from '../components/Pages';
 import { fetchUser } from '../http/userApi';
 import MyLoader from '../components/ui/loader/MyLoader';
 import Error from './Error';
+import { Button } from 'react-bootstrap';
 
 const Shop = observer(() => {
     const {device} = useContext(Context)
@@ -33,7 +34,9 @@ const Shop = observer(() => {
         })
     }, [device.page, device.selectedType, device.selectedBrand, device.limit])//будет вызываться каждый раз когда изменим страницу, бренд , тип
 
-   
+
+    
+ 
 
     return (
         <Container>
@@ -62,6 +65,7 @@ const Shop = observer(() => {
                     <li>Не обработаны ошибки Не знаю как, неужно что бы кто то научил</li>
                   
                 </ul>
+                
               
             </Row>
         </Container>

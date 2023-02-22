@@ -6,17 +6,17 @@ const ApiError = require('../error/ApiError')
 class DviceController {
     //создание в базу
     async create(req, res, next) {
-        try {
-          let {name, price, brandId, typeId, info} = req.body;
-          const {img} = req.files
-          let fileName = uuid.v4() + ".jpg"  // функция сгенерирует уникальный id и добавить .jpg
-          img.mv(path.resolve(__dirname, '..', 'static', fileName))//для перемещения файла в заданную папку
         /**
          * resolve( адаптирует указаный путь к операционной системе
          * __dirname  путь до текущей папки  (controllers)
          * '..'  вернуться на диреторию назад
          * 'static'  куда 
          */
+        try {
+          let {name, price, brandId, typeId, info} = req.body;
+          const {img} = req.files
+          let fileName = uuid.v4() + ".jpg"  // функция сгенерирует уникальный id и добавить .jpg
+          img.mv(path.resolve(__dirname, '..', 'static', fileName))//для перемещения файла в заданную папку
           const device = await Device.create({ name, price, brandId, typeId,  img: fileName })
 
           if (info) {
@@ -89,7 +89,7 @@ class DviceController {
             devices = await Device.sequelize.query(' DELETE FROM public.devices WHERE id = ?', {
                 replacements: [id]
             })
-            return res.json(id)
+            return res.json(devices)// был id
         } catch (e) {
             next(ApiError.badRequest(e.messsage)) 
         }  
