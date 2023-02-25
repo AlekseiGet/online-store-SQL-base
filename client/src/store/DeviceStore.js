@@ -5,6 +5,7 @@ export default class DeviceStore {
         this._types =[]
         this._brands = []
         this._devices = []
+        this._rating = 0  //для изменения оценки
         this._selectedType ={}//для кликабельности
         this._selectedBrand = {}//для кликабельности
         this._selectedDevice = {}
@@ -23,6 +24,9 @@ export default class DeviceStore {
     }
     setDevice(devices) {
         this._devices = devices
+    }
+    setRating(rating) {
+        this._rating = rating  //для изменения оценки
     }
     setSelectedType(type) {
         this.setPage(1) //чтобы при перезагрузке страницы при выборе начиналось с 1 страницы
@@ -56,6 +60,9 @@ export default class DeviceStore {
     }
     get devices() {
         return this._devices
+    }
+    get rating() {   //для изменения оценки
+        return this._rating
     }
     get selectedType() {
         return this._selectedType

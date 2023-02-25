@@ -22,6 +22,7 @@ const Device = sequelize.define('device', {
     price: { type: DataTypes.INTEGER , allowNull: false },
     rating: { type: DataTypes.INTEGER , defaultValue: 0},
     img: { type: DataTypes.STRING, allowNull: false },
+
 })
 
 const Type = sequelize.define('type', {
@@ -44,6 +45,7 @@ const DeviceInfo = sequelize.define('device_info', {
     title: { type: DataTypes.STRING, allowNull: false },
     description: { type: DataTypes.STRING, allowNull: false },
 })
+
 
 const TypeBrand = sequelize.define('type_brand', {//связующая таблица
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },

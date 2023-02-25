@@ -38,7 +38,7 @@ class DviceController {
        
     }
     //получение по запросе 
-    async getAll(req, res) {
+    async getAll(req, res, next) {
         try {
             let {brandId, typeId, limit, page} = req.query
         page = page || 1 // по умолчанию одна странца
@@ -66,7 +66,7 @@ class DviceController {
     }
 
     //фунуция получения одного конкретного девайса по id устройства 53.00
-    async getOne(req, res) {
+    async getOne(req, res, next) {
         try {
             const {id} = req.params //получаю id устройства из параметров в deviceRouter (router.get('/:id', deviceController.getOne))
         const device = await Device.findOne(
@@ -82,7 +82,7 @@ class DviceController {
         
     }
     //функция удаления
-    async delete(req, res) {
+    async delete(req, res, next) {
         const id = req.params.id//получаю из запроса id
         let devices;
         try {

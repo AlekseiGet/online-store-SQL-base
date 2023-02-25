@@ -12,10 +12,14 @@ import { fetchOneDevice } from '../http/deviceApi';
 import MyLoader from '../components/ui/loader/MyLoader';
 import replacement from "../image/404.jpg";
 import { addBasketDevice } from '../http/deviceApi'
+import { useNavigate } from 'react-router-dom';
+import { SHOP_ROUTE } from '../utils/consts';
+
 
 
 const DevicePage = () => {
       const { user } = useContext(Context)
+      const history = useNavigate()
       const [device, setDevice] = useState({info: []})
       const {id} = useParams()//параметры строки запроса
       const [foto, setFoto] = useState(replacement)
@@ -41,13 +45,22 @@ const DevicePage = () => {
         formData.append('basketId', user.user.id)  
         formData.append('deviceId', device.id) 
         addBasketDevice(formData)
+        history(SHOP_ROUTE)
     }
     
     const buy = () => {
-        alert("Купить")
+        alert("Купить? Приходи или позвони *909 343434433443")
+        
     }
+    
+    const estimation = () => {
+        alert('Сколько звёзд ?')
+        device["rating"]=5 //изменил рейтинг но ещё не внёс в базу
+        setDevice(device)
+        console.log(device.rating);
+    }
+        console.log(device.rating);
 
-  // console.log(device);
     return (
         <Container className='mt-3' >
             <Row>
@@ -57,7 +70,7 @@ const DevicePage = () => {
                <Col nd={4}>
                    <Row className='d-flex flex-column align-items-center ' >
                        <h2 style={{textAlign: "center"}} >{device.name}</h2>
-                       <div className="d-flex align-items-center justify-content-center"
+                        <div className="d-flex align-items-center justify-content-center" onClick={estimation}
                             style={{background: `url(${BigStar}) no-repeat center center `, width: 240, height: 240, backgroundSize: 'cover', fontSize: 64 }} >
                            {device.rating}
                        </div>

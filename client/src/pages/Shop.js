@@ -9,12 +9,9 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '..';
 import { fetchTypes, fetchBrand, fetchDevice } from '../http/deviceApi';
 import Pages from '../components/Pages';
-import { fetchUser } from '../http/userApi';
-import MyLoader from '../components/ui/loader/MyLoader';
-import Error from './Error';
-import { Button } from 'react-bootstrap';
 
-const Shop = observer(() => {
+
+const Shop = observer ( () => {
     const {device} = useContext(Context)
   
     useEffect(()=> {
@@ -58,11 +55,8 @@ const Shop = observer(() => {
                 }
                 
                 <ul>
-                    <li>при перезагрузке теряются права</li>
-                    <li>Корзина не работает</li>
-                    <li>Добавление в корзину</li>
-                    <li>Удаление из корзины</li>
-                    <li>Не обработаны ошибки Не знаю как, неужно что бы кто то научил</li>
+                    <li>при перезагрузке теряются права</li>        
+                    <li>Рейтинг не работает</li>
                   
                 </ul>
                 

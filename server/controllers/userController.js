@@ -80,7 +80,7 @@
         }         
       }
       
-      async replaceRole(req, res) {//находить одного пользрвателя и меняю права на user      
+      async replaceRole(req, res, next) {//находить одного пользрвателя и меняю права на user      
           try {
               const id = req.params.id
               const user = await User.sequelize.query("UPDATE public.users SET role = 'USER' WHERE id = ?", { replacements: [id]})   //:: character varying приведение к типу оказалось ненужно          

@@ -3,7 +3,7 @@
 const Sequelize = require('../db')
 
 class BrandController {
-    async create(req, res) {
+    async create(req, res, next) {
         try {
             const { name } = req.body // Здесь может быть косяк
                 const brand = await Brand.create({ name })
@@ -13,7 +13,7 @@ class BrandController {
             next(ApiError.badRequest(e.messsage)) 
         }       
     }
-    async getAll(req, res) {
+    async getAll(req, res, next) {
         try {
             const brands = await Brand.findAll()
             return res.json(brands)
@@ -21,7 +21,7 @@ class BrandController {
             next(ApiError.badRequest(e.messsage)) 
         }
     }
-    async delete(req, res) {     
+    async delete(req, res, next) {     
         try {
             const id = req.params.id //получаю из запроса id
             const brands = await Brand.sequelize.query(' DELETE FROM public.brands WHERE id = ?', { replacements: [id] })

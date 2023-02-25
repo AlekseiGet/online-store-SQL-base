@@ -39,20 +39,21 @@ export const deleteDevice = async (device) => {
 
 
 
-
-
-
-export const addBasketDevice = async (device) => {
+export const addBasketDevice = async (device) => { // Добавление в корзину
     const { data } = await $authHost.post('api/basket', device)
     return data
 }
 
-export const fetchBasket = async (id) => {
-  const { data } = await $host.get('api/basket', id)
+export const fetchBasket = async (id) => { // Получаю ID всех device выбраных пользователем
+  const { data } = await $host.get('api/basket/' + id)
     return data 
-}/** */
+}
 
 
+export const deleteOneDeviceInBasket = async (id) => {
+    const { data } = await $authHost.delete('api/basket/' + id)
+    return data
+}
 
 
 
