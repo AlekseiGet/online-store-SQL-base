@@ -1,6 +1,6 @@
 const uuid = require('uuid')// для генерации уникльного id установить пакет npm i uuid
 const path = require('path')
-const {Device, DeviceInfo} = require('../models/models')
+const {Device, DeviceInfo, Rating} = require('../models/models')
 const ApiError = require('../error/ApiError')
 
 class DviceController {
@@ -32,12 +32,12 @@ class DviceController {
   
         return res.json(device)
         } catch (e) {
-          next (ApiError.badRequest(e.messsage))
+            return next (ApiError.badRequest(e.messsage))
         }
 
        
     }
-    //получение по запросе 
+    //получение по запросу 
     async getAll(req, res, next) {
         try {
             let {brandId, typeId, limit, page} = req.query
@@ -60,7 +60,7 @@ class DviceController {
         }
         return res.json(devices)
         } catch (e) {
-            next(ApiError.badRequest(e.messsage)) 
+           return next(ApiError.badRequest(e.messsage)) 
         }
         
     }
@@ -77,7 +77,7 @@ class DviceController {
         )
         return res.json(device)
         } catch (error) {
-            next(ApiError.badRequest(e.messsage)) 
+            return next(ApiError.badRequest(e.messsage)) 
         }
         
     }
@@ -91,10 +91,23 @@ class DviceController {
             })
             return res.json(devices)// был id
         } catch (e) {
-            next(ApiError.badRequest(e.messsage)) 
+            return next(ApiError.badRequest(e.messsage)) 
         }  
     }
-   
+    // Функция изменения рейтинга
+      async replaceRating(req, res, next) {
+        try {
+           let { id, rating } = req.body 
+            const user = await Device.sequelize.query(`UPDATE public.devices SET rating = ${rating} WHERE id = ?`, { replacements: [id] })  
+ 
+            return res.json(user)
+            
+        } catch (e) {
+            return next(ApiError.badRequest(e.messsage)) 
+        }
+        
+    }
+  
 }
 
 module.exports = new DviceController()

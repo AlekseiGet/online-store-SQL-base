@@ -28,7 +28,7 @@ export const createDevice = async (device) => {
         const { data } = await $authHost.post('api/device', device)
         return data
     } catch (e) {
-        alert("Поля не заполнены!!!")
+        alert("Поля не заполнены!!!, Уже есть такой")
     }   
 }
 
@@ -44,13 +44,30 @@ export const addBasketDevice = async (device) => { // Добавление в к
     return data
 }
 
+
+export const replaceRatingDevice = async (device) => { // Изменение рейтинга
+    const { data } = await $authHost.patch('api/device', device)
+    return data
+}
+
+export const creatRatingDevice = async (device) => { // Создание файла с данными рейтинга
+    const { data } = await $authHost.post('api/rating', device)
+    return data
+}
+
+export const fetchRatingDevice = async (id) => { // Получение всех объектов с данными рейтинга по id devace
+    const { data } = await $host.get('api/rating/' + id)
+    return data
+}
+
+
 export const fetchBasket = async (id) => { // Получаю ID всех device выбраных пользователем
   const { data } = await $host.get('api/basket/' + id)
     return data 
 }
 
 
-export const deleteOneDeviceInBasket = async (id) => {
+export const deleteOneDeviceInBasket = async (id) => {  //Удалить один девайс из корзины
     const { data } = await $authHost.delete('api/basket/' + id)
     return data
 }

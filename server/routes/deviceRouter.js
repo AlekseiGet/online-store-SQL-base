@@ -7,5 +7,6 @@ router.post('/',checkRole('ADMIN'), deviceController.create)
 router.get('/', deviceController.getAll) 
 router.get('/:id', deviceController.getOne)
 router.delete('/:id', checkRole('ADMIN'), deviceController.delete)
+router.patch('/', deviceController.replaceRating)
 
 module.exports = router

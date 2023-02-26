@@ -8,7 +8,7 @@ import BigStar from "../assets/VeryBigStar.png"
 import Card from 'react-bootstrap/esm/Card';
 import Button from 'react-bootstrap/esm/Button';
 import { useParams } from 'react-router-dom';
-import { fetchOneDevice } from '../http/deviceApi';
+import { fetchOneDevice, replaceRatingDevice, creatRatingDevice, fetchRatingDevice } from '../http/deviceApi';
 import MyLoader from '../components/ui/loader/MyLoader';
 import replacement from "../image/404.jpg";
 import { addBasketDevice } from '../http/deviceApi'
@@ -53,13 +53,48 @@ const DevicePage = () => {
         
     }
     
-    const estimation = () => {
-        alert('Сколько звёзд ?')
-        device["rating"]=5 //изменил рейтинг но ещё не внёс в базу
-        setDevice(device)
-        console.log(device.rating);
+    const  estimation = async() => {//Узнаю оценку
+        if (user.user.id) {
+            let newRating = prompt('ваша оценка от 1 до 5, числом') // сюда вставить что то покрасивее чем это
+            if (newRating >= 0 && newRating <= 5  ) {                
+                if (device.rating > 0) {
+                     const getOldRatingDevice =  await fetchRatingDevice(device.id) //Здесь получил по запросу из всех Rating оценку
+ /**
+  * Раз есть оценка значит ктото оценку ставил, нужно узнать ты это или нет 
+  * если нет то можно дальше действовать
+  * если это твоя оценка значит конец кода alert("Ты уже ставил тут оценку")
+  * 
+  * console.log(getOldRatingDevice);
+  *  */                   
+                     
+                     let summ = 0;
+                     for (let i = 0; i < getOldRatingDevice.length; i++) {
+                          summ = summ + getOldRatingDevice[i].rate  
+                         }
+                         newRating = ((summ + Number(newRating)) / getOldRatingDevice.length).toFixed(1) //Усреднил оценку
+                    newEstimation(newRating)
+                } else {
+                    newEstimation(newRating)
+                }
+               
+          } else {
+            alert('Какая то неправильная оценка')
+          }
+        }else{
+           alert("Только для авторизованых пользователей") 
+        }
     }
-        console.log(device.rating);
+
+
+    const newEstimation = (newRating) => { // Изменяю рейтинг & создаю в базе объект с инфо о рейтинге
+        const formData = new FormData()
+        formData.append('id', device.id )
+        formData.append('rating', newRating)
+        formData.append('userId', user.user.id)
+        replaceRatingDevice(formData) // Изменяю рейтинг
+        creatRatingDevice(formData)  //создаю в базе объект с инфо о рейтинге
+    }
+       
 
     return (
         <Container className='mt-3' >

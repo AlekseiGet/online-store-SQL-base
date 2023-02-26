@@ -5,7 +5,7 @@ export default class DeviceStore {
         this._types =[]
         this._brands = []
         this._devices = []
-        this._rating = 0  //для изменения оценки
+        this._rating = [0]  //для изменения оценки
         this._selectedType ={}//для кликабельности
         this._selectedBrand = {}//для кликабельности
         this._selectedDevice = {}

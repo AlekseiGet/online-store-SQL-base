@@ -6,6 +6,7 @@ const User = sequelize.define('user', {
     email: {type: DataTypes.STRING, unique: true, },
     password: {type: DataTypes.STRING },
     role: { type: DataTypes.STRING, defaultValue: "USER"},
+   
 } )
 
 const Basket = sequelize.define('basket', {
@@ -35,10 +36,12 @@ const Brand = sequelize.define('brand', {
     name: { type: DataTypes.STRING, unique: true, allowNull: false },
 })
 
+
 const Rating = sequelize.define('rating', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     rate: { type: DataTypes.INTEGER, allowNull: false },
 })
+
 
 const DeviceInfo = sequelize.define('device_info', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
