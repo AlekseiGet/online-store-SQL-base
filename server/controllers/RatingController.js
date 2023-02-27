@@ -24,8 +24,9 @@ class RatingController {
     
     async newRating(req, res, next) {  //Изменил оценку
         try {
-                 let { id, rating, userId } = req.body 
-     
+
+             let { id, rating, userId } = req.body 
+                 
              const checkUser = await Rating.findOne(// Проверка ставил ли уже оценку
                  {
                      where: {
@@ -34,19 +35,20 @@ class RatingController {
                      }  
                  }
              )
-     
-            if (!checkUser) {
+      
+            if (! checkUser){
                 const ratimng = await Rating.create({
                    rate: rating,
                    userId: userId,
                    deviceId: id
-                 })
-                return res.json(ratimng)
+                 })  
+            return res.json(ratimng)
             }else{
               return res.json("Уже ставил оценку")
-            }
+            }     
+            
         } catch (e) {
-            return next(ApiError.badRequest(e.messsage)) 
+            return ApiError.badRequest(e.messsage) 
         }
              
     }
