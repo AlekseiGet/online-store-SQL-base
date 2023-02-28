@@ -9,7 +9,6 @@ import Card from 'react-bootstrap/esm/Card';
 import Button from 'react-bootstrap/esm/Button';
 import { useParams } from 'react-router-dom';
 import { fetchOneDevice, replaceRatingDevice, creatRatingDevice, fetchRatingDevice } from '../http/deviceApi';
-import MyLoader from '../components/ui/loader/MyLoader';
 import replacement from "../image/404.jpg";
 import { addBasketDevice } from '../http/deviceApi'
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +26,7 @@ const DevicePage = () => {
     
       useEffect(() => {
         fetchOneDevice(id).then(data => setDevice(data))
-      },[] )
+      },[id] )
       
       useEffect(()=>{
         if (device.img) {
@@ -44,8 +43,7 @@ const DevicePage = () => {
       } 
 
     const addToCart = () =>{
-        alert(`Добавил ${device.id}`)
-        
+        alert(`Добавил ${device.id}`) 
         const formData = new FormData()
         formData.append('basketId', user.user.id)  
         formData.append('deviceId', device.id) 
@@ -57,75 +55,36 @@ const DevicePage = () => {
         alert("Купить? Приходи или позвони *909 343434433443")
         
     }
-    /**
-     * const  estimation = async() => {//Узнаю оценку
-        if (user.user.id) {
-            let newRating = prompt('ваша оценка от 1 до 5, числом') // сюда вставить что то покрасивее чем это
-            if (newRating >= 0 && newRating <= 5  ) {    //Если поставил правильную оценку, когда переделаю можно убрать  
-                if (device.rating > 0) { //если оценка больше 0 значит как минимум одна оценка предмета есть
-                     const getOldRatingDevice =  await fetchRatingDevice(device.id) //Здесь получил по запросу из всех Rating оценку
-
-
-
-
-                    for (let i = 0; i < getOldRatingDevice.length; i++) {//Пробегаю по массиву в поиске именно твоей оценки
-                        if (getOldRatingDevice[i].userId != user.user.id) { //Если нет твоих оценок
-
-
-                            let summ = 0;
-                           for (let i = 0; i < getOldRatingDevice.length; i++) {//Собираю все оценки
-                              summ = summ + getOldRatingDevice[i].rate  
-                             }
-                             newRating = ((summ + Number(newRating)) / getOldRatingDevice.length).toFixed(1) 
-                            newEstimation(newRating)//Изменил оценку
-                            console.log("Усреднил оценку");
-
-
-
-                        } else{
-                             console.log("есть твоя оценка");
-                        }                                          
-                    }                                  
-                } else { //Если оценка 0 значит ты не ставл и значит можно присто добавить её
-                    newEstimation(newRating) //Изменил оценку
-                    console.log("Первая оценка");
-                } 
-                
-                
-
-          } else {
-            alert('Какая то неправильная оценка')
-          }         
-        }else{
-           alert("Только для авторизованых пользователей") 
-        }
-    }
-     */
-    
+ 
     const estimation = async () => {//Узнаю оценку
         if (user.user.id) {
             let newRating = prompt('ваша оценка от 1 до 5, числом') // сюда вставить что то покрасивее чем это
             if (newRating >= 0 && newRating <= 5) {    //Если поставил правильную оценку, когда переделаю можно убрать 
                 if (getOldRatingDevice.length) { //если оценка больше 0 значит как минимум одна оценка предмета есть
-                  
+                    let hasEstimation = false
+                    for (let i = 0; i < getOldRatingDevice.length; i++) {//Пробегаю по массиву в поиске именно твоей оценки   
+                        if (getOldRatingDevice[i].userId === user.user.id) {
+                            hasEstimation = true
+                         }
+                    }
+                   
+                    if (!hasEstimation) {//Изменил оценку 
 
                         let summ = 0;
-                        for (let i = 0; i < getOldRatingDevice.length; i++) {//Собираю все оценки
-                            summ = summ + getOldRatingDevice[i].rate
+                        for (let r = 0; r < getOldRatingDevice.length; r++) {//Собираю все оценки
+                            summ = summ + getOldRatingDevice[r].rate
                         }
-                        newRating = ((summ + Number(newRating)) / getOldRatingDevice.length).toFixed(1) 
-
-                     newEstimation(newRating)//Изменил оценку
-                    console.log("вторая оценка");
-                    console.log(getOldRatingDevice);
-
-
-
-                    
+                        newRating = Math.round((summ + Number(newRating)) / getOldRatingDevice.length) //Усреднить нужно
+                        newEstimation(newRating)
+                        alert("Спасибо за твою оценку");
+                        console.log(newRating);
+                    }else{
+                        alert(" Ты уже ставил тут оценку")
+                    }
+                  
                 } else { //Если оценка 0 значит ты не ставл и значит можно присто добавить её
                     newEstimation(newRating) //Изменил оценку
-                    console.log("Первая оценка");
-                    console.log(getOldRatingDevice);
+                    console.log("Это первая оценка");
                 } 
 
             } else {
