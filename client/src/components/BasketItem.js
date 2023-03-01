@@ -17,7 +17,7 @@ const BasketItem = ({ device, delEllement }) => {
          delEllement(device.info[0].deviceId) //передал в родителя для манипуляций с массивом
         }
       else{
-        alert("Хорошо")     
+        alert(" Это хорошо")     
       }
     } 
       
